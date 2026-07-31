@@ -6,7 +6,7 @@
  */
 
 import {
-  GAME_W, GAME_H, HUD_H, SCORE, RESPAWN_INVULN, DEATH_ANIM,
+  HUD_H, SCORE, RESPAWN_INVULN, DEATH_ANIM,
   STAGE_INTRO, STAGE_CLEAR_ANIM, PLAYER_H,
 } from '../core/constants.js';
 import { createRng } from '../core/rng.js';
@@ -81,7 +81,9 @@ export class Game {
     this.player.reset(this._spawnPos());
     this.hammer.reset();
     this.timer = 0;
-    this.inputLock = 0.25;
+    // 타이틀에서는 입력을 막지 않는다. (막으면 로딩 직후 누른 첫 키가 조용히 씹힌다)
+    // 실수로 즉시 재시작하는 것을 막아야 하는 곳은 게임 오버 화면뿐이다.
+    this.inputLock = 0;
   }
 
   startGame() {
@@ -539,7 +541,8 @@ export class Game {
     this.hammer.reset();
     const { gained, extraLife } = this.score.clearStage();
     if (extraLife) this._extraLife();
-    this.effects.popup(GAME_W / 2, GAME_H / 2 - 10, gained, '#46d9ff');
+    // 완료 패널 뒤에 가리지 않도록 플레이어 자리에 띄운다
+    this.effects.popup(this.player.x, this.player.y - PLAYER_H - 6, gained, '#46d9ff');
     this.flashText = 'STAGE CLEAR';
     this.rollers = [];
     this.tools = [];
@@ -590,4 +593,4 @@ const NO_INPUT = {
 };
 
 export { NO_INPUT };
-export const BOUNDS = { GAME_W, GAME_H, HUD_H };
+export { HUD_H };

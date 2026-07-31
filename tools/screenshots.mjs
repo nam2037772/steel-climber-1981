@@ -93,8 +93,8 @@ await page.evaluate(() => window.__steel.game._killPlayer('hit'));
 await page.waitForTimeout(400);
 await shot('08-death');
 
-// 스테이지 완료
-await page.waitForTimeout(1600);
+// 스테이지 완료 — 사망 후 재시작이 끝나고 PLAY로 돌아온 뒤에 목표에 닿게 한다
+await page.waitForFunction(() => window.__steel.game.state === 'play', null, { timeout: 15000 });
 await page.evaluate(() => {
   const g = window.__steel.game;
   g.player.invuln = 9999;
@@ -104,7 +104,8 @@ await page.evaluate(() => {
   g.player.platform = g.stage.goal.platform;
   g.player.state = 'ground';
 });
-await page.waitForTimeout(200);
+await page.waitForFunction(() => window.__steel.game.state === 'clear', null, { timeout: 5000 });
+await page.waitForTimeout(300);
 await shot('09-stage-clear');
 
 // 2 / 3 / 4 단계
