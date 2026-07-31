@@ -1,0 +1,21 @@
+{
+  "name": "steel-climber-1981",
+  "version": "1.0.0",
+  "private": true,
+  "description": "1980년대 초 오락실 수직 등반 아케이드 게임의 감각을 재현한 독자 제작 웹게임 (빌드 도구 없는 정적 웹게임)",
+  "type": "module",
+  "scripts": {
+    "start": "node tools/serve.mjs 8080",
+    "serve": "node tools/serve.mjs 8080",
+    "test": "node --test \"tests/unit/*.test.mjs\"",
+    "test:unit": "node --test \"tests/unit/*.test.mjs\"",
+    "test:e2e": "playwright test",
+    "shots": "node tools/screenshots.mjs",
+    "check": "node tools/check-syntax.mjs && node --test \"tests/unit/*.test.mjs\""
+  },
+  "keywords": ["arcade", "canvas", "retro", "platformer", "climbing"],
+  "license": "MIT",
+  "devDependencies": {
+    "@playwright/test": "^1.49.0"
+  }
+}
