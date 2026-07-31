@@ -36,6 +36,17 @@ export class Hammer {
     return this.active && this.time <= HAMMER_WARN;
   }
 
+  /**
+   * ACTION(X) 키 — 자동으로 번갈아 나오는 타격 프레임을 즉시 바꾼다.
+   * 앞에 있는 드럼통을 칠지, 위에 있는 불꽃을 칠지 직접 고를 수 있다.
+   */
+  forceSwing() {
+    if (!this.active) return false;
+    this.frame ^= 1;
+    this.swing = 0;
+    return true;
+  }
+
   update(dt) {
     this.justExpired = false;
     if (!this.active) return;

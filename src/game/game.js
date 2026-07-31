@@ -243,6 +243,7 @@ export class Game {
     if (wasAir && this.player.state !== PS.AIR) this._awardJumpOvers();
 
     this.hammer.update(dt);
+    if (input.actionPressed && this.hammer.forceSwing()) this.emit('swing');
     if (this.hammer.justExpired) this.emit('hammerEnd');
     if (this.hammer.warning) this._hammerWarnTick(dt);
 

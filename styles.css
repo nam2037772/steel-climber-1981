@@ -1,0 +1,215 @@
+/* STEEL CLIMBER 1981 — 화면 껍데기.
+   게임 그림은 전부 캔버스 안에서 그리고, 여기서는 배치와 CRT 효과만 담당한다. */
+
+:root {
+  --steel: #5d6e88;
+  --steel-dark: #232b38;
+  --ink: #e8eef7;
+  --dim: #7f8ea6;
+  --accent: #46d9ff;
+  --safety: #ffd400;
+  --bg: #05070b;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'DejaVu Sans Mono', ui-monospace, Menlo, Consolas, monospace;
+  /* 가로 넘침 금지 */
+  overflow-x: hidden;
+}
+
+body {
+  min-height: 100dvh;
+  display: flex;
+  justify-content: center;
+  padding: 8px 8px 16px;
+}
+
+#shell {
+  width: 100%;
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ── 게임 화면 ─────────────────────────────────────── */
+
+#screen {
+  position: relative;
+  width: 100%;
+  /* 세로형 화면. 조작 버튼과 설정줄이 잘리지 않도록 뷰포트 높이에서 자리를 뺀다. */
+  max-width: min(420px, 100%, calc((100dvh - 250px) * 0.875));
+  aspect-ratio: 224 / 256;
+  margin: 0 auto;
+  background: #000;
+  border: 2px solid var(--steel-dark);
+  border-radius: 3px;
+}
+
+#game {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  /* 픽셀 보간 끄기 — 224×256 백버퍼를 그대로 확대한다 */
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  background: #000;
+}
+
+#crt-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  display: none;
+}
+
+/* CRT 효과 — 약한 스캔라인 + 테두리 발광 + 미세한 번짐.
+   글자가 안 보일 정도로 진하게 넣지 않는다. */
+#screen.crt {
+  border-color: #2c4a5c;
+  box-shadow:
+    0 0 0 1px rgba(70, 217, 255, 0.22),
+    0 0 18px rgba(70, 217, 255, 0.16),
+    0 0 46px rgba(70, 217, 255, 0.07);
+}
+
+#screen.crt #crt-overlay {
+  display: block;
+  background:
+    radial-gradient(ellipse at center, rgba(255, 255, 255, 0.045) 0%, rgba(0, 0, 0, 0.28) 100%),
+    repeating-linear-gradient(to bottom,
+      rgba(0, 0, 0, 0.20) 0 1px,
+      rgba(0, 0, 0, 0) 1px 3px);
+}
+
+#btn-start {
+  position: absolute;
+  left: 50%;
+  bottom: 8%;
+  transform: translateX(-50%);
+  padding: 9px 26px;
+  font: inherit;
+  font-size: 15px;
+  letter-spacing: 2px;
+  color: #101820;
+  background: var(--safety);
+  border: 2px solid #a88c00;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+#btn-start:hover { background: #ffe64d; }
+#btn-start.hidden { display: none; }
+
+/* ── 모바일 조작 ───────────────────────────────────── */
+
+#controls {
+  display: none;
+  width: 100%;
+  max-width: 420px;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 8px;
+  user-select: none;
+}
+
+#controls button {
+  font: inherit;
+  font-size: 13px;
+  color: var(--ink);
+  background: #131a24;
+  border: 2px solid var(--steel);
+  border-radius: 4px;
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+}
+
+#controls button:active {
+  background: var(--steel);
+  color: #0b0f15;
+}
+
+.pad { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.pad-row { display: flex; gap: 4px; }
+.pad button { width: 52px; height: 44px; }
+
+.acts { display: flex; gap: 6px; align-items: flex-end; }
+.acts button { width: 68px; height: 56px; font-weight: bold; }
+#btn-jump { border-color: var(--safety); color: var(--safety); }
+#btn-action { border-color: #ff7a1a; color: #ff7a1a; }
+
+@media (max-width: 760px), (pointer: coarse) {
+  #controls { display: flex; }
+}
+
+/* ── 설정줄 ────────────────────────────────────────── */
+
+#panel {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  font-size: 12px;
+}
+
+#panel button {
+  font: inherit;
+  font-size: 12px;
+  padding: 5px 10px;
+  color: var(--ink);
+  background: #131a24;
+  border: 1px solid var(--steel);
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+#panel button:hover { border-color: var(--accent); }
+
+.vol { display: flex; align-items: center; gap: 5px; color: var(--dim); }
+.vol input { width: 88px; accent-color: var(--accent); }
+.chk { display: flex; align-items: center; gap: 4px; color: var(--dim); cursor: pointer; }
+.chk input { accent-color: var(--accent); }
+
+/* ── 안내문 ────────────────────────────────────────── */
+
+footer {
+  width: 100%;
+  text-align: center;
+  color: var(--dim);
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+footer p { margin: 4px 0; }
+
+.note {
+  color: var(--safety);
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+.keys { color: #9fb0c6; }
+.keys strong { color: var(--accent); }
+
+.legal { max-width: 460px; margin: 6px auto 0; opacity: 0.75; }
+.legal strong { color: #9fb0c6; }
+
+@media (max-width: 420px) {
+  .pad button { width: 46px; height: 40px; }
+  .acts button { width: 60px; height: 52px; font-size: 12px; }
+  footer { font-size: 10px; }
+}

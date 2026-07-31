@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="1980년대 초 오락실 수직 등반 아케이드 게임의 감각을 재현한 독자 제작 웹게임 (개발·추억 재현용).">
+<title>STEEL CLIMBER 1981</title>
+<link rel="stylesheet" href="./styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23000'/%3E%3Crect x='2' y='3' width='12' height='2' fill='%235d6e88'/%3E%3Crect x='2' y='8' width='12' height='2' fill='%235d6e88'/%3E%3Crect x='2' y='13' width='12' height='2' fill='%235d6e88'/%3E%3Crect x='11' y='5' width='2' height='3' fill='%23b9c6d8'/%3E%3Crect x='4' y='10' width='2' height='3' fill='%23b9c6d8'/%3E%3Crect x='6' y='5' width='3' height='3' fill='%23ffd400'/%3E%3C/svg%3E">
+</head>
+<body>
+  <div id="shell">
+    <div id="screen" class="crt">
+      <canvas id="game" width="224" height="256" aria-label="STEEL CLIMBER 1981 게임 화면" role="img"></canvas>
+      <div id="crt-overlay" aria-hidden="true"></div>
+      <button id="btn-start" type="button">START</button>
+    </div>
+
+    <div id="controls" aria-label="모바일 조작 버튼">
+      <div class="pad">
+        <button id="btn-up" type="button" aria-label="사다리 오르기">&#9650;</button>
+        <div class="pad-row">
+          <button id="btn-left" type="button" aria-label="왼쪽 이동">&#9664;</button>
+          <button id="btn-down" type="button" aria-label="사다리 내려가기">&#9660;</button>
+          <button id="btn-right" type="button" aria-label="오른쪽 이동">&#9654;</button>
+        </div>
+      </div>
+      <div class="acts">
+        <button id="btn-action" type="button" aria-label="해머 타격 전환">HIT</button>
+        <button id="btn-jump" type="button" aria-label="점프">JUMP</button>
+      </div>
+    </div>
+
+    <div id="panel">
+      <button id="btn-pause" type="button">PAUSE</button>
+      <button id="btn-mute" type="button" aria-pressed="false">SOUND ON</button>
+      <label class="vol">
+        <span>VOL</span>
+        <input id="volume" type="range" min="0" max="100" step="5" value="60" aria-label="음량">
+      </label>
+      <label class="chk">
+        <input id="crt-toggle" type="checkbox" checked>
+        <span>CRT</span>
+      </label>
+    </div>
+
+    <footer>
+      <p class="note">개발·추억 재현용 게임</p>
+      <p class="keys">
+        <strong>PC</strong> ←→ / A·D 이동 · ↑↓ / W·S 사다리 · Space 점프 · X 해머 · P 일시정지 · Enter 시작
+      </p>
+      <p class="legal">
+        1980년대 초 오락실 수직 등반 게임의 <strong>플레이 방식</strong>에서 영감을 받아 직접 만든 독자 게임입니다.
+        특정 상용 게임의 상표·로고·캐릭터 이미지·음원·소스코드를 사용하지 않았으며,
+        모든 그래픽과 사운드는 코드로 생성됩니다.
+      </p>
+    </footer>
+  </div>
+
+  <script type="module" src="./src/main.js"></script>
+  <noscript>
+    <p style="color:#e8eef7;text-align:center;font-family:monospace">
+      이 게임을 실행하려면 자바스크립트가 필요합니다.
+    </p>
+  </noscript>
+</body>
+</html>
